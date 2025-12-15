@@ -7,8 +7,6 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
         {
@@ -16,7 +14,8 @@
           "value": "False",
           "type": "BOOL"
         }
-      ]
+      ],
+      "cmakeCommandArgs": "-DSDL3_Path=\"C:/Libraries/SDL3/build\" -DGLM_Include_Path=\"C:/Libraries/glm\""
     }
   ]
 }

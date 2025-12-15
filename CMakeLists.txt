@@ -8,63 +8,28 @@ LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/test/bin")
-#list(APPEND CMAKE_PREFIX_PATH "C:/Libraries/SDL3")
+
+
+
 
 #project variables
 set(EzEngine2D_LIB "EzEngine2D")
-option(BUILD_SHARED_LIBS "Building shared or static" OFF)
-set(SDL3_PATH "C:/Libraries/SDL3")
-set(GLM_PATH "C:/Libraries/glm")
-
+set(CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}/cmake")
+set(EXTERN_DIR "${CMAKE_CURRENT_LIST_DIR}/extern")
 
 #options
-option(DoFetchContent "Fetching for all libraries" OFF)
+option(BUILD_SHARED_LIBS "Building shared or static" OFF)
 
-find_package(OpenGL REQUIRED)
-
-if(DoFetchContent)
-include(FetchContent)
-
-#SDL
-FetchContent_Declare(
-	SDL3
-	GIT_REPOSITORY https://github.com/libsdl-org/SDL
-	GIT_TAG release-3.2.28
-	GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(SDL3)
-
-#GLM
-FetchContent_Declare(
-	GLM
-	GIT_REPOSITORY https://github.com/g-truc/glm
-	GIT_TAG 1.0.2
-	GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(GLM)
-
-else()
-#search
-list(APPEND CMAKE_PREFIX_PATH ${SDL3_PATH})
-
-find_package(OpenGL REQUIRED)
-find_package(SDL3 REQUIRED CONFIG)
-
-add_library(glm INTERFACE)
-target_include_directories(glm INTERFACE ${GLM_PATH})
-
-
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+set(OS_WINDOWS 1)
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "LINUX")
+set(OS_LINUX 1)
 endif()
 
-if(BUILD_SHARED_LIBS)
-
-else()
+include(${CMAKE_DIR}/Macros.cmake)
 
 
-
-endif()
-
-
-
+#add submodules and uptate them if needed
+add_submodule(external/SDL3)
+add_submodule(external/glm)
 add_subdirectory(test)
-
