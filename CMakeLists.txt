@@ -29,7 +29,4 @@ endif()
 include(${CMAKE_DIR}/Macros.cmake)
 
 
-#add submodules and uptate them if needed
-add_submodule(external/SDL3)
-add_submodule(external/glm)
 add_subdirectory(test)
